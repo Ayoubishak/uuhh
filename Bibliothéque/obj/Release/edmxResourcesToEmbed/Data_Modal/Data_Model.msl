@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LIBRARYModelStoreContainer" CdmEntityContainer="BibliothéqueEntities">
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="LIBRARYModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Emprintes">
+      <EntityTypeMapping TypeName="LIBRARYModel.Emprinte">
+        <MappingFragment StoreEntitySet="Emprinte">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_RSV" ColumnName="Id_RSV" />
+          <ScalarProperty Name="Nbr_Days" ColumnName="Nbr_Days" />
+          <ScalarProperty Name="Date_Emprinte" ColumnName="Date_Emprinte" />
+          <ScalarProperty Name="Date_Retourne" ColumnName="Date_Retourne" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Filière">
+      <EntityTypeMapping TypeName="LIBRARYModel.Filière">
+        <MappingFragment StoreEntitySet="Filière">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_SCT" ColumnName="Id_SCT" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groupes">
+      <EntityTypeMapping TypeName="LIBRARYModel.Groupe">
+        <MappingFragment StoreEntitySet="Groupe">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_FLR" ColumnName="Id_FLR" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ouvrages">
+      <EntityTypeMapping TypeName="LIBRARYModel.Ouvrage">
+        <MappingFragment StoreEntitySet="Ouvrage">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_SCT" ColumnName="Id_SCT" />
+          <ScalarProperty Name="Id_Thm" ColumnName="Id_Thm" />
+          <ScalarProperty Name="Titre" ColumnName="Titre" />
+          <ScalarProperty Name="Lieu" ColumnName="Lieu" />
+          <ScalarProperty Name="Auteur" ColumnName="Auteur" />
+          <ScalarProperty Name="Editor" ColumnName="Editor" />
+          <ScalarProperty Name="Prix" ColumnName="Prix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Secteurs">
+      <EntityTypeMapping TypeName="LIBRARYModel.Secteur">
+        <MappingFragment StoreEntitySet="Secteur">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stagiaires">
+      <EntityTypeMapping TypeName="LIBRARYModel.Stagiaire">
+        <MappingFragment StoreEntitySet="Stagiaire">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id_GRP" ColumnName="Id_GRP" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Thème">
+      <EntityTypeMapping TypeName="LIBRARYModel.Thème">
+        <MappingFragment StoreEntitySet="Thème">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Livres">
+      <EntityTypeMapping TypeName="LIBRARYModel.Livre">
+        <MappingFragment StoreEntitySet="Livre">
+          <ScalarProperty Name="DateEntrye" ColumnName="DateEntrye" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Etat" ColumnName="Etat" />
+          <ScalarProperty Name="Ispan" ColumnName="Ispan" />
+          <ScalarProperty Name="Id_OVR" ColumnName="Id_OVR" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reserves">
+      <EntityTypeMapping TypeName="LIBRARYModel.Reserve">
+        <MappingFragment StoreEntitySet="Reserve">
+          <ScalarProperty Name="Etat" ColumnName="Etat" />
+          <ScalarProperty Name="Date_Reserve" ColumnName="Date_Reserve" />
+          <ScalarProperty Name="Id_LVR" ColumnName="Id_LVR" />
+          <ScalarProperty Name="Id_STG" ColumnName="Id_STG" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,712 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LIBRARYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prenom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="Type" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Emprinte">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_RSV" Type="int" />
+          <Property Name="Nbr_Days" Type="int" Nullable="false" />
+          <Property Name="Date_Emprinte" Type="date" Nullable="false" />
+          <Property Name="Date_Retourne" Type="date" />
+        </EntityType>
+        <EntityType Name="Filière">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_SCT" Type="int" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_FLR" Type="int" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Livre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_OVR" Type="int" />
+          <Property Name="Ispan" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Etat" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="DateEntrye" Type="date" />
+        </EntityType>
+        <EntityType Name="Ouvrage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_SCT" Type="int" />
+          <Property Name="Id_Thm" Type="int" />
+          <Property Name="Titre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lieu" Type="varchar(max)" Nullable="false" />
+          <Property Name="Auteur" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Editor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prix" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reserve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_STG" Type="int" />
+          <Property Name="Id_LVR" Type="int" />
+          <Property Name="Date_Reserve" Type="date" Nullable="false" />
+          <Property Name="Etat" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Secteur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stagiaire">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_GRP" Type="int" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prenom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="Type" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Thème">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'LIBRARY.dbo.List_All_Reserves' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <Association Name="FK__Emprinte__Id_RSV__4CA06362">
+          <End Role="Reserve" Type="Self.Reserve" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Emprinte" Type="Self.Emprinte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reserve">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emprinte">
+              <PropertyRef Name="Id_RSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Filière__Id_SCT__2F10007B">
+          <End Role="Secteur" Type="Self.Secteur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Filière" Type="Self.Filière" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Secteur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filière">
+              <PropertyRef Name="Id_SCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Groupe__Id_FLR__36B12243">
+          <End Role="Filière" Type="Self.Filière" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Groupe" Type="Self.Groupe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filière">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Groupe">
+              <PropertyRef Name="Id_FLR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Livre__Id_OVR__3F466844">
+          <End Role="Ouvrage" Type="Self.Ouvrage" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Livre" Type="Self.Livre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ouvrage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Livre">
+              <PropertyRef Name="Id_OVR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ouvrage__Id_SCT__31EC6D26">
+          <End Role="Secteur" Type="Self.Secteur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ouvrage" Type="Self.Ouvrage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Secteur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ouvrage">
+              <PropertyRef Name="Id_SCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ouvrage__Id_Thm__32E0915F">
+          <End Role="Thème" Type="Self.Thème" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ouvrage" Type="Self.Ouvrage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Thème">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ouvrage">
+              <PropertyRef Name="Id_Thm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reserve__Id_LVR__48CFD27E">
+          <End Role="Livre" Type="Self.Livre" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reserve" Type="Self.Reserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Livre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reserve">
+              <PropertyRef Name="Id_LVR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reserve__Id_STG__47DBAE45">
+          <End Role="Stagiaire" Type="Self.Stagiaire" Multiplicity="0..1" />
+          <End Role="Reserve" Type="Self.Reserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stagiaire">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reserve">
+              <PropertyRef Name="Id_STG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Stagiaire__Id_GR__3A81B327">
+          <End Role="Groupe" Type="Self.Groupe" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Stagiaire" Type="Self.Stagiaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groupe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stagiaire">
+              <PropertyRef Name="Id_GRP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LIBRARYModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emprinte" EntityType="Self.Emprinte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filière" EntityType="Self.Filière" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groupe" EntityType="Self.Groupe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Livre" EntityType="Self.Livre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ouvrage" EntityType="Self.Ouvrage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reserve" EntityType="Self.Reserve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Secteur" EntityType="Self.Secteur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stagiaire" EntityType="Self.Stagiaire" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Thème" EntityType="Self.Thème" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Emprinte__Id_RSV__4CA06362" Association="Self.FK__Emprinte__Id_RSV__4CA06362">
+            <End Role="Reserve" EntitySet="Reserve" />
+            <End Role="Emprinte" EntitySet="Emprinte" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Filière__Id_SCT__2F10007B" Association="Self.FK__Filière__Id_SCT__2F10007B">
+            <End Role="Secteur" EntitySet="Secteur" />
+            <End Role="Filière" EntitySet="Filière" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Groupe__Id_FLR__36B12243" Association="Self.FK__Groupe__Id_FLR__36B12243">
+            <End Role="Filière" EntitySet="Filière" />
+            <End Role="Groupe" EntitySet="Groupe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Livre__Id_OVR__3F466844" Association="Self.FK__Livre__Id_OVR__3F466844">
+            <End Role="Ouvrage" EntitySet="Ouvrage" />
+            <End Role="Livre" EntitySet="Livre" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ouvrage__Id_SCT__31EC6D26" Association="Self.FK__Ouvrage__Id_SCT__31EC6D26">
+            <End Role="Secteur" EntitySet="Secteur" />
+            <End Role="Ouvrage" EntitySet="Ouvrage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ouvrage__Id_Thm__32E0915F" Association="Self.FK__Ouvrage__Id_Thm__32E0915F">
+            <End Role="Thème" EntitySet="Thème" />
+            <End Role="Ouvrage" EntitySet="Ouvrage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reserve__Id_LVR__48CFD27E" Association="Self.FK__Reserve__Id_LVR__48CFD27E">
+            <End Role="Livre" EntitySet="Livre" />
+            <End Role="Reserve" EntitySet="Reserve" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reserve__Id_STG__47DBAE45" Association="Self.FK__Reserve__Id_STG__47DBAE45">
+            <End Role="Stagiaire" EntitySet="Stagiaire" />
+            <End Role="Reserve" EntitySet="Reserve" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Stagiaire__Id_GR__3A81B327" Association="Self.FK__Stagiaire__Id_GR__3A81B327">
+            <End Role="Groupe" EntitySet="Groupe" />
+            <End Role="Stagiaire" EntitySet="Stagiaire" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LIBRARYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Emprinte">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_RSV" Type="Int32" />
+          <Property Name="Nbr_Days" Type="Int32" Nullable="false" />
+          <Property Name="Date_Emprinte" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_Retourne" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Reserve" Relationship="LIBRARYModel.FK__Emprinte__Id_RSV__4CA06362" FromRole="Emprinte" ToRole="Reserve" />
+        </EntityType>
+        <EntityType Name="Filière">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_SCT" Type="Int32" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Secteur" Relationship="Self.FK__Filière__Id_SCT__2F10007B" FromRole="Filière" ToRole="Secteur" />
+          <NavigationProperty Name="Groupes" Relationship="Self.FK__Groupe__Id_FLR__36B12243" FromRole="Filière" ToRole="Groupe" />
+        </EntityType>
+        <EntityType Name="Groupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_FLR" Type="Int32" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Filière" Relationship="Self.FK__Groupe__Id_FLR__36B12243" FromRole="Groupe" ToRole="Filière" />
+          <NavigationProperty Name="Stagiaires" Relationship="Self.FK__Stagiaire__Id_GR__3A81B327" FromRole="Groupe" ToRole="Stagiaire" />
+        </EntityType>
+        <EntityType Name="Ouvrage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_SCT" Type="Int32" />
+          <Property Name="Id_Thm" Type="Int32" />
+          <Property Name="Titre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lieu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Auteur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Editor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prix" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Secteur" Relationship="Self.FK__Ouvrage__Id_SCT__31EC6D26" FromRole="Ouvrage" ToRole="Secteur" />
+          <NavigationProperty Name="Thème" Relationship="Self.FK__Ouvrage__Id_Thm__32E0915F" FromRole="Ouvrage" ToRole="Thème" />
+          <NavigationProperty Name="Livres" Relationship="LIBRARYModel.FK__Livre__Id_OVR__3F466844" FromRole="Ouvrage" ToRole="Livre" />
+        </EntityType>
+        <EntityType Name="Secteur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Filière" Relationship="Self.FK__Filière__Id_SCT__2F10007B" FromRole="Secteur" ToRole="Filière" />
+          <NavigationProperty Name="Ouvrages" Relationship="Self.FK__Ouvrage__Id_SCT__31EC6D26" FromRole="Secteur" ToRole="Ouvrage" />
+        </EntityType>
+        <EntityType Name="Stagiaire">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_GRP" Type="Int32" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Groupe" Relationship="Self.FK__Stagiaire__Id_GR__3A81B327" FromRole="Stagiaire" ToRole="Groupe" />
+          <NavigationProperty Name="Reserves" Relationship="LIBRARYModel.FK__Reserve__Id_STG__47DBAE45" FromRole="Stagiaire" ToRole="Reserve" />
+        </EntityType>
+        <EntityType Name="Thème">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ouvrages" Relationship="Self.FK__Ouvrage__Id_Thm__32E0915F" FromRole="Thème" ToRole="Ouvrage" />
+        </EntityType>
+        <Association Name="FK__Filière__Id_SCT__2F10007B">
+          <End Role="Secteur" Type="Self.Secteur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Filière" Type="Self.Filière" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Secteur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filière">
+              <PropertyRef Name="Id_SCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Groupe__Id_FLR__36B12243">
+          <End Role="Filière" Type="Self.Filière" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Groupe" Type="Self.Groupe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filière">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Groupe">
+              <PropertyRef Name="Id_FLR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Stagiaire__Id_GR__3A81B327">
+          <End Role="Groupe" Type="Self.Groupe" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Stagiaire" Type="Self.Stagiaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groupe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stagiaire">
+              <PropertyRef Name="Id_GRP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ouvrage__Id_SCT__31EC6D26">
+          <End Role="Secteur" Type="Self.Secteur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ouvrage" Type="Self.Ouvrage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Secteur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ouvrage">
+              <PropertyRef Name="Id_SCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ouvrage__Id_Thm__32E0915F">
+          <End Role="Thème" Type="Self.Thème" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ouvrage" Type="Self.Ouvrage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Thème">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ouvrage">
+              <PropertyRef Name="Id_Thm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BibliothéqueEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Emprintes" EntityType="Self.Emprinte" />
+          <EntitySet Name="Filière" EntityType="Self.Filière" />
+          <EntitySet Name="Groupes" EntityType="Self.Groupe" />
+          <EntitySet Name="Ouvrages" EntityType="Self.Ouvrage" />
+          <EntitySet Name="Secteurs" EntityType="Self.Secteur" />
+          <EntitySet Name="Stagiaires" EntityType="Self.Stagiaire" />
+          <EntitySet Name="Thème" EntityType="Self.Thème" />
+          <AssociationSet Name="FK__Filière__Id_SCT__2F10007B" Association="Self.FK__Filière__Id_SCT__2F10007B">
+            <End Role="Secteur" EntitySet="Secteurs" />
+            <End Role="Filière" EntitySet="Filière" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Groupe__Id_FLR__36B12243" Association="Self.FK__Groupe__Id_FLR__36B12243">
+            <End Role="Filière" EntitySet="Filière" />
+            <End Role="Groupe" EntitySet="Groupes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Stagiaire__Id_GR__3A81B327" Association="Self.FK__Stagiaire__Id_GR__3A81B327">
+            <End Role="Groupe" EntitySet="Groupes" />
+            <End Role="Stagiaire" EntitySet="Stagiaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ouvrage__Id_SCT__31EC6D26" Association="Self.FK__Ouvrage__Id_SCT__31EC6D26">
+            <End Role="Secteur" EntitySet="Secteurs" />
+            <End Role="Ouvrage" EntitySet="Ouvrages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ouvrage__Id_Thm__32E0915F" Association="Self.FK__Ouvrage__Id_Thm__32E0915F">
+            <End Role="Thème" EntitySet="Thème" />
+            <End Role="Ouvrage" EntitySet="Ouvrages" />
+          </AssociationSet>
+          <EntitySet Name="Livres" EntityType="LIBRARYModel.Livre" />
+          <AssociationSet Name="FK__Livre__Id_OVR__3F466844" Association="LIBRARYModel.FK__Livre__Id_OVR__3F466844">
+            <End Role="Ouvrage" EntitySet="Ouvrages" />
+            <End Role="Livre" EntitySet="Livres" />
+          </AssociationSet>
+          <EntitySet Name="Reserves" EntityType="LIBRARYModel.Reserve" />
+          <AssociationSet Name="FK__Emprinte__Id_RSV__4CA06362" Association="LIBRARYModel.FK__Emprinte__Id_RSV__4CA06362">
+            <End Role="Reserve" EntitySet="Reserves" />
+            <End Role="Emprinte" EntitySet="Emprintes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reserve__Id_LVR__48CFD27E" Association="LIBRARYModel.FK__Reserve__Id_LVR__48CFD27E">
+            <End Role="Livre" EntitySet="Livres" />
+            <End Role="Reserve" EntitySet="Reserves" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reserve__Id_STG__47DBAE45" Association="LIBRARYModel.FK__Reserve__Id_STG__47DBAE45">
+            <End Role="Stagiaire" EntitySet="Stagiaires" />
+            <End Role="Reserve" EntitySet="Reserves" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Livre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_OVR" Type="Int32" />
+          <Property Name="Ispan" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Etat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateEntrye" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Ouvrage" Relationship="LIBRARYModel.FK__Livre__Id_OVR__3F466844" FromRole="Livre" ToRole="Ouvrage" />
+          <NavigationProperty Name="Reserves" Relationship="LIBRARYModel.FK__Reserve__Id_LVR__48CFD27E" FromRole="Livre" ToRole="Reserve" />
+        </EntityType>
+        <Association Name="FK__Livre__Id_OVR__3F466844">
+          <End Type="LIBRARYModel.Ouvrage" Role="Ouvrage" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LIBRARYModel.Livre" Role="Livre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ouvrage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Livre">
+              <PropertyRef Name="Id_OVR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Reserve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_STG" Type="Int32" />
+          <Property Name="Id_LVR" Type="Int32" />
+          <Property Name="Date_Reserve" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Etat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Emprintes" Relationship="LIBRARYModel.FK__Emprinte__Id_RSV__4CA06362" FromRole="Reserve" ToRole="Emprinte" />
+          <NavigationProperty Name="Livre" Relationship="LIBRARYModel.FK__Reserve__Id_LVR__48CFD27E" FromRole="Reserve" ToRole="Livre" />
+          <NavigationProperty Name="Stagiaire" Relationship="LIBRARYModel.FK__Reserve__Id_STG__47DBAE45" FromRole="Reserve" ToRole="Stagiaire" />
+        </EntityType>
+        <Association Name="FK__Emprinte__Id_RSV__4CA06362">
+          <End Type="LIBRARYModel.Reserve" Role="Reserve" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LIBRARYModel.Emprinte" Role="Emprinte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reserve">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emprinte">
+              <PropertyRef Name="Id_RSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reserve__Id_LVR__48CFD27E">
+          <End Type="LIBRARYModel.Livre" Role="Livre" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LIBRARYModel.Reserve" Role="Reserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Livre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reserve">
+              <PropertyRef Name="Id_LVR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reserve__Id_STG__47DBAE45">
+          <End Type="LIBRARYModel.Stagiaire" Role="Stagiaire" Multiplicity="0..1" />
+          <End Type="LIBRARYModel.Reserve" Role="Reserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stagiaire">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reserve">
+              <PropertyRef Name="Id_STG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LIBRARYModelStoreContainer" CdmEntityContainer="BibliothéqueEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="LIBRARYModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emprintes">
+            <EntityTypeMapping TypeName="LIBRARYModel.Emprinte">
+              <MappingFragment StoreEntitySet="Emprinte">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_RSV" ColumnName="Id_RSV" />
+                <ScalarProperty Name="Nbr_Days" ColumnName="Nbr_Days" />
+                <ScalarProperty Name="Date_Emprinte" ColumnName="Date_Emprinte" />
+                <ScalarProperty Name="Date_Retourne" ColumnName="Date_Retourne" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Filière">
+            <EntityTypeMapping TypeName="LIBRARYModel.Filière">
+              <MappingFragment StoreEntitySet="Filière">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_SCT" ColumnName="Id_SCT" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groupes">
+            <EntityTypeMapping TypeName="LIBRARYModel.Groupe">
+              <MappingFragment StoreEntitySet="Groupe">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_FLR" ColumnName="Id_FLR" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ouvrages">
+            <EntityTypeMapping TypeName="LIBRARYModel.Ouvrage">
+              <MappingFragment StoreEntitySet="Ouvrage">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_SCT" ColumnName="Id_SCT" />
+                <ScalarProperty Name="Id_Thm" ColumnName="Id_Thm" />
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="Lieu" ColumnName="Lieu" />
+                <ScalarProperty Name="Auteur" ColumnName="Auteur" />
+                <ScalarProperty Name="Editor" ColumnName="Editor" />
+                <ScalarProperty Name="Prix" ColumnName="Prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Secteurs">
+            <EntityTypeMapping TypeName="LIBRARYModel.Secteur">
+              <MappingFragment StoreEntitySet="Secteur">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stagiaires">
+            <EntityTypeMapping TypeName="LIBRARYModel.Stagiaire">
+              <MappingFragment StoreEntitySet="Stagiaire">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_GRP" ColumnName="Id_GRP" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Thème">
+            <EntityTypeMapping TypeName="LIBRARYModel.Thème">
+              <MappingFragment StoreEntitySet="Thème">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Livres">
+            <EntityTypeMapping TypeName="LIBRARYModel.Livre">
+              <MappingFragment StoreEntitySet="Livre">
+                <ScalarProperty Name="DateEntrye" ColumnName="DateEntrye" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Ispan" ColumnName="Ispan" />
+                <ScalarProperty Name="Id_OVR" ColumnName="Id_OVR" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reserves">
+            <EntityTypeMapping TypeName="LIBRARYModel.Reserve">
+              <MappingFragment StoreEntitySet="Reserve">
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Date_Reserve" ColumnName="Date_Reserve" />
+                <ScalarProperty Name="Id_LVR" ColumnName="Id_LVR" />
+                <ScalarProperty Name="Id_STG" ColumnName="Id_STG" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
